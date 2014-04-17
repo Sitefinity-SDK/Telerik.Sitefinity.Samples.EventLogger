@@ -36,7 +36,7 @@ The project refers to the following NuGet packages:
 * Telerik.Sitefinity.All.nupkg
 
 
-*Telerik.Sitefinity.Samples.Common** library
+**Telerik.Sitefinity.Samples.Common** library
 
 * Telerik.Sitefinity.Core.nupkg
 
