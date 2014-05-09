@@ -1,6 +1,8 @@
 Telerik.Sitefinity.Samples.EventLogger
 ======================================
 
+[![Build Status](http://sdk-jenkins-ci.cloudapp.net/buildStatus/icon?job=Telerik.Sitefinity.Samples.EventLogger.CI)](http://sdk-jenkins-ci.cloudapp.net/job/Telerik.Sitefinity.Samples.EventLogger.CI/)
+
 The Event Logger sample project is a simple module demonstrating how to use the new _EventHub_ to subscribe to data events in Sitefinity. 
 
 ### Requirements
