@@ -149,10 +149,10 @@ namespace SitefinityWebApp.Modules.EventLogger
 		private void AppendPropertyChangedData(IDataEvent EventData, StringBuilder sb)
 		{
 			var changed = EventData as IPropertyChangeDataEvent;
-			if (changed.ChangedPropertyNames.Count > 0)
+            if (changed.ChangedProperties.Count > 0)
 			{
 				sb.Append("	Changed Properties:\n");
-				foreach (var property in changed.ChangedPropertyNames)
+                foreach (var property in changed.ChangedProperties)
 					sb.AppendFormat("		Property: {0}\n", property);
 			}
 		}
