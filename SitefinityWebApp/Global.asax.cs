@@ -23,6 +23,9 @@ using Telerik.Sitefinity.Web.UI.NavigationControls;
 using SitefinityWebApp.Modules.EventLogger;
 using Telerik.Sitefinity.Forums;
 using Telerik.Sitefinity.Forums.Web.UI;
+using Telerik.Sitefinity.Data;
+using Telerik.Sitefinity.Abstractions;
+using Telerik.Sitefinity.Events.Model;
 
 namespace SitefinityWebApp
 {
@@ -58,22 +61,17 @@ namespace SitefinityWebApp
 
 		protected void Application_Start(object sender, EventArgs e)
 		{
-			Telerik.Sitefinity.Abstractions.Bootstrapper.Initializing += new EventHandler<Telerik.Sitefinity.Data.ExecutingEventArgs>(Bootstrapper_Initializing);
-			Telerik.Sitefinity.Abstractions.Bootstrapper.Initialized += new EventHandler<Telerik.Sitefinity.Data.ExecutedEventArgs>(Bootstrapper_Initialized);
+			Bootstrapper.Initialized += new EventHandler<ExecutedEventArgs>(Bootstrapper_Initialized);
 		}
 
-		protected void Bootstrapper_Initializing(object sender, Telerik.Sitefinity.Data.ExecutingEventArgs args)
-		{
-			if (args.CommandName == "RegisterRoutes")
-			{
-				SampleUtilities.RegisterModule<EventLoggerModule>("EventLogger", "This sample describes how to log Sitefinity events in your website..");
-			}
-		}
-
-		protected void Bootstrapper_Initialized(object sender, Telerik.Sitefinity.Data.ExecutedEventArgs args)
-		{
-			if (args.CommandName == "Bootstrapped")
-			{
+        void Bootstrapper_Initialized(object sender, ExecutedEventArgs e)
+        {
+            if (e.CommandName == "RegisterRoutes")
+            {
+                SampleUtilities.RegisterModule<EventLoggerModule>("EventLogger", "This sample describes how to log Sitefinity events in your website..");
+            }
+            if ((Bootstrapper.IsDataInitialized) && (e.CommandName == "Bootstrapped"))
+            {
 				SystemManager.RunWithElevatedPrivilegeDelegate worker = new SystemManager.RunWithElevatedPrivilegeDelegate(CreateSampleWorker);
 				SystemManager.RunWithElevatedPrivilege(worker);
 			}
@@ -111,8 +109,6 @@ namespace SitefinityWebApp
 				eventsConfig.Providers.Add(customProvider);
 				ConfigManager.GetManager().SaveSection(eventsConfig);
 			}
-
-			SampleUtilities.CreateUsersAndRoles();
 
 			this.CreateNewsItems();
 			this.CreateBlogPosts();
@@ -322,26 +318,34 @@ namespace SitefinityWebApp
 		{
 			var eventId = Guid.Empty;
 
-			App.Prepare().SetContentProvider(ProviderName).WorkWith().Event().CreateNew()
-				.Do(e =>
-				{
-					eventId = e.Id;
-					e.Title = title;
-					e.Content = content;
-					e.EventStart = startDate;
-					e.EventEnd = endDate;
-					e.Street = street;
-					e.City = city;
-					e.State = state;
-					e.Country = country;
-					e.ContactEmail = contatcEmail;
-					e.ContactName = contactName;
-					e.ContactWeb = contactWeb;
+            var eventsFluentApi = App.Prepare().SetContentProvider(ProviderName).WorkWith().Event();
+            EventsManager eventsManager = eventsFluentApi.GetManager() as EventsManager;
+            Calendar defaultCalendar = eventsManager.GetCalendars().FirstOrDefault();
+            if (defaultCalendar != null)
+            {
+                eventsFluentApi
+                    .CreateNew()
+                    .Do(e =>
+                    {
+                        eventId = e.Id;
+                        e.Title = title;
+                        e.Content = content;
+                        e.EventStart = startDate;
+                        e.EventEnd = endDate;
+                        e.Street = street;
+                        e.City = city;
+                        e.State = state;
+                        e.Country = country;
+                        e.ContactEmail = contatcEmail;
+                        e.ContactName = contactName;
+                        e.ContactWeb = contactWeb;
 
-					e.PublicationDate = DateTime.Today;
-					e.ExpirationDate = DateTime.Today.AddDays(365);
-					e.ApprovalWorkflowState.Value = SampleUtilities.ApprovalWorkflowStatePublished;
-				}).Publish().SaveChanges();
+                        e.PublicationDate = DateTime.Today;
+                        e.ExpirationDate = DateTime.Today.AddDays(365);
+                        e.ApprovalWorkflowState.Value = SampleUtilities.ApprovalWorkflowStatePublished;
+                        e.Parent = defaultCalendar;
+                    }).Publish().SaveChanges();
+            }
 		}
 
 		private void CreateHomePage()
