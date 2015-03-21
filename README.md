@@ -45,4 +45,5 @@ To login to Sitefinity backend, use the following credentials:
 ### Additional resources
 
 [Developers Guide](http://www.sitefinity.com/documentation/documentationarticles/developers-guide)
+
 [Car rental demo](http://demos.telerik.com/aspnet-ajax/carrental/)
