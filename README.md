@@ -8,7 +8,7 @@ The Event Logger sample project is a simple module demonstrating how to use the 
 ### Requirements
 
 * Sitefinity license
-* .NET Framework 4
+* .NET Framework 4.5
 * Visual Studio 2012
 * Microsoft SQL Server 2008R2 or later versions
 
