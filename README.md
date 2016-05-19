@@ -1,13 +1,13 @@
-Telerik.Sitefinity.Samples.EventLogger
+Progress.Sitefinity.Samples.EventLogger
 ======================================
 
 [![Build Status](http://sdk-jenkins-ci.cloudapp.net/buildStatus/icon?job=Telerik.Sitefinity.Samples.EventLogger.CI)](http://sdk-jenkins-ci.cloudapp.net/job/Telerik.Sitefinity.Samples.EventLogger.CI/)
 
-The Event Logger sample project is a simple module demonstrating how to use the new _EventHub_ to subscribe to data events in Sitefinity. 
+The Event Logger sample project is a simple module demonstrating how to use the new _EventHub_ to subscribe to data events in Sitefinity CMS. 
 
 ### Requirements
 
-* Sitefinity license
+* Sitefinity CMS license
 * .NET Framework 4.5
 * Visual Studio 2012
 * Microsoft SQL Server 2008R2 or later versions
@@ -36,11 +36,11 @@ For version-specific details about the required Sitefinity NuGet packages for th
 
 ### Login
 
-To login to Sitefinity backend, use the following credentials:  
+To login into the Sitefinity CMS backend, use the following credentials:  
 **Username:** admin  
 **Password:** password
 
 ### Additional resources
 
-* Sitefinity documentation: [Develop: Use and extend Sitefinity functionality](http://docs.sitefinity.com/develop-create-and-manage-website-content)
+* Progress Sitefinity CMS Documentation: [Develop: Use and extend Sitefinity CMS functionality](http://docs.sitefinity.com/develop-create-and-manage-website-content)
 * [Car rental demo](http://demos.telerik.com/aspnet-ajax/carrental/)
